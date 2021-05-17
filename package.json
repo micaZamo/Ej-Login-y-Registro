@@ -1,0 +1,23 @@
+{
+  "name": "ej-login-y-registro",
+  "version": "1.0.0",
+  "description": "Login y registro en el server con express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/micaZamo/Ej-Login-y-Registro.git"
+  },
+  "author": "Micaela Zamorano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/micaZamo/Ej-Login-y-Registro/issues"
+  },
+  "homepage": "https://github.com/micaZamo/Ej-Login-y-Registro#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
