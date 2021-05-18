@@ -7,12 +7,18 @@ const PUERTO=4101
 app.use(express.urlencoded({ extended: true }));
 
 // Middleware para archivos de recursos estáticos (css,html)
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, "cliente")));
 
 //GET inicial retorna a la pagina de login
 app.get("/",function(req,res){
-    res.sendFile(path.join(__dirname,"login.html"))
+    res.sendFile(path.join(__dirname,"cliente/login.html"))
 })
+
+//POST verifica los datos ingresados por el cliente al iniciar sesion
+app.post("/login", function(req,res){
+
+}
+)
 
 
 
