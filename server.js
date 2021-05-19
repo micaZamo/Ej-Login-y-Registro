@@ -29,19 +29,21 @@ app.get("/", function (req, res) {
 app.post("/login", function (req, res) {
   const usuarioIngresado = req.body.usuario;
   const contIngresada = req.body.contrasenia;
+  let logeado = false;
 
   for (let i = 0; i < clientes.length; i++) {
     if (
       usuarioIngresado === clientes[i].usuario &&
       contIngresada === clientes[i].contrasenia
     ) {
-      res.sendFile(path.join(__dirname, "cliente/bienvenida.html"));
-      console.log("Logeado correctamente");
-      break;
-    } else {
-      res.sendFile(path.join(__dirname, "cliente/login.html"));
-      break;
+      logeado = true;
     }
+  }
+
+  if (logeado) {
+    res.sendFile(path.join(__dirname, "cliente/bienvenida.html"));
+  } else {
+    res.sendFile(path.join(__dirname, "cliente/login.html"));
   }
 });
 
@@ -55,18 +57,19 @@ app.post("/registro", function (req, res) {
   const usuarioNvo = req.body.usuarioNvo;
   const contNva = req.body.contNueva;
   const contRepet = req.body.contRep;
+  let registrado = false;
 
-  for (i = 0; i <= clientes.length; i++) {
-    if (
-      usuarioNvo === clientes[i].usuario ||
-      (usuarioNvo !== clientes[i].usuario && contNva !== contRepet)
-    ) {
-      res.sendFile(path.join(__dirname, "cliente/registro.html"));
-      break;
-    } else {
-      clientes.push({ usuario: usuarioNvo, contrasenia: contNva });
-      res.sendFile(path.join(__dirname, "cliente/login.html"));
+  for (i = 0; i < clientes.length; i++) {
+    if (usuarioNvo === clientes[i].usuario || contNva !== contRepet) {
+      registrado = true;
     }
+  }
+
+  if (registrado) {
+    res.sendFile(path.join(__dirname, "cliente/registro.html"));
+  } else {
+    clientes.push({ usuario: usuarioNvo, contrasenia: contNva });
+    res.sendFile(path.join(__dirname, "cliente/login.html"));
   }
 });
 
