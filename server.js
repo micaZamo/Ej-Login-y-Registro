@@ -61,7 +61,7 @@ app.post("/registro", function (req, res) {
         console.log("Ya existe el usuario");
         res.sendFile(path.join(__dirname, "cliente/registro.html"));
       } else {
-        if (usuarioNvo == !clientes[i].usuario && contNva == !contRept) {
+        if (usuarioNvo !== clientes[i].usuario && contNva !== contRepet) {
           console.log("Las contraseñas no coinciden, intente nuevamente");
           res.sendFile(path.join(__dirname, "cliente/registro.html"));
         } else {
