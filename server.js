@@ -6,13 +6,14 @@ const PUERTO = 4237;
 let clientes = [
   {
     usuario: "maria",
-    contrasenia: 1234,
+    contrasenia: "1234",
   },
   {
     usuario: "pepe",
-    contrasenia: 1111,
+    contrasenia: "1122",
   },
 ];
+
 // Middleware para poner el contenido de un form post en req.body
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,21 +29,24 @@ app.get("/", function (req, res) {
 app.post("/login", function (req, res) {
   const usuarioIngresado = req.body.usuario;
   const contIngresada = req.body.contrasenia;
+
   for (let i = 0; i < clientes.length; i++) {
     if (
       usuarioIngresado === clientes[i].usuario &&
       contIngresada === clientes[i].contrasenia
     ) {
       res.sendFile(path.join(__dirname, "cliente/bienvenida.html"));
+      console.log("Logeado correctamente");
+      break;
     } else {
-      console.log("Usuario y/o contraseña incorrectas");
       res.sendFile(path.join(__dirname, "cliente/login.html"));
+      break;
     }
   }
 });
 
 //GET cuando quiere registrarse deriva a html de registro
-app.get("/registro", function (res, req) {
+app.get("/registro", function (req, res) {
   res.sendFile(path.join(__dirname, "cliente/registro.html"));
 });
 
@@ -52,23 +56,16 @@ app.post("/registro", function (req, res) {
   const contNva = req.body.contNueva;
   const contRepet = req.body.contRep;
 
-  if (usuarioNvo === " " && contNva === " " && contRepet === "") {
-    console.log("Debe completar todos los campos");
-    res.sendFile(path.join(__dirname, "cliente/registro.html"));
-  } else {
-    for (i = 0; i <= clientes.length; i++) {
-      if (usuarioNvo === clientes[i].usuario) {
-        console.log("Ya existe el usuario");
-        res.sendFile(path.join(__dirname, "cliente/registro.html"));
-      } else {
-        if (usuarioNvo !== clientes[i].usuario && contNva !== contRepet) {
-          console.log("Las contraseñas no coinciden, intente nuevamente");
-          res.sendFile(path.join(__dirname, "cliente/registro.html"));
-        } else {
-          clientes.push(usuarioNvo);
-          res.sendFile(path.join(__dirname, "cliente/login.html"));
-        }
-      }
+  for (i = 0; i <= clientes.length; i++) {
+    if (
+      usuarioNvo === clientes[i].usuario ||
+      (usuarioNvo !== clientes[i].usuario && contNva !== contRepet)
+    ) {
+      res.sendFile(path.join(__dirname, "cliente/registro.html"));
+      break;
+    } else {
+      clientes.push({ usuario: usuarioNvo, contrasenia: contNva });
+      res.sendFile(path.join(__dirname, "cliente/login.html"));
     }
   }
 });
